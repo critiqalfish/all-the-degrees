@@ -1,38 +1,65 @@
-.App {
-  text-align: center;
-}
+@import "~@flaticon/flaticon-uicons/css/all/all";
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+body {
+  background-color: transparent;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Weather {
+  text-align: center;
+}
+
+.Weather #location {
+  
+}
+
+.BottomBar {
+  background: #3c3e57;
+  border-radius: 15px 15px 0px 0px;
+  width: 100vw;
+  height: 12vh;
+  position: fixed;
+  bottom: 0vh;
+  left: 0vw;
+  padding-bottom: 1vh;
+}
+
+.BottomBar .items {
+  display: flex;
+  list-style: none;
+  position: relative;
+  height: 100%;
+  align-items: center;
+}
+
+.BottomBar .items .item {
+  text-align: center;
+  flex: 1 1 0px;
+  position: relative;
+}
+
+.BottomBar .items .item a {
+  color: #acb8c1;
+  text-decoration: none;
+  font-size: 0.8em;
+}
+
+.BottomBar .items .item a.active,
+.BottomBar .items .item a.active i {
+  color: #ffffff;
+}
+
+.BottomBar .items .item i {
+  color: #acb8c1;
+  display: block;
+  font-size: 2.5rem;
 }
