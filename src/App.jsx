@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
     const [selectedLocation, setLocation] = useState(JSON.parse(localStorage.getItem('selectedLocation')) || 'Location');
+    const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowDegrees': 19, 'highDegrees': 23, 'degrees': {}});
 
     useEffect(() => {
         localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));
@@ -19,7 +20,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather selectedLocation={selectedLocation} setLocation={setLocation}/>
+                        <Weather selectedLocation={selectedLocation} setLocation={setLocation} degrees={degrees}/>
                     }>
                     </Route>
                     <Route path="/search" element={

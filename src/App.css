@@ -25,6 +25,20 @@ body {
   word-wrap: break-word;
 }
 
+.Weather #degrees {
+  font-size: 10vh;
+}
+
+.Weather #low, .Weather #high {
+  font-size: 3vh;
+}
+
+.Weather .box {
+  width: 90vw;
+  background-color: #45465c;
+  border-radius: 15px;
+}
+
 .BottomBar {
   background: #3c3e57;
   border-radius: 15px 15px 0px 0px;
