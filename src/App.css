@@ -15,11 +15,14 @@ body {
 }
 
 .Weather {
+  width: 90vw;
   text-align: center;
 }
 
 .Weather #location {
-  
+  font-size: 4vh;
+  width: 90vw;
+  word-wrap: break-word;
 }
 
 .BottomBar {
