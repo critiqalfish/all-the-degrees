@@ -7,3 +7,5 @@
 - [ ] weatherapi
 - [ ] visualcrossing
 - [ ] weatherstack
+- [ ] TheWeatherChannel
+- [ ] Meteomatics
