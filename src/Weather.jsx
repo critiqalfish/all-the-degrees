@@ -1,5 +1,5 @@
 const Weather = ({selectedLocation, setLocation}) => {
-    setLocation('Locationnnnnnnnnnnnnnnnnnnn');
+    setLocation('Location');
     return (
         <div className="Weather">
             <h1 id="location">{selectedLocation}</h1>
