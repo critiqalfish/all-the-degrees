@@ -27,6 +27,16 @@ body {
 
 .Weather #degrees {
   font-size: 10vh;
+  margin-top: 1vh;
+}
+
+.Weather #degrees i {
+  vertical-align: middle;
+  margin-right: 3vw;
+}
+
+.isun {
+  color: rgb(255, 217, 0);
 }
 
 .Weather #low, .Weather #high {
