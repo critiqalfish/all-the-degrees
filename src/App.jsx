@@ -23,7 +23,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather selectedLocation={selectedLocation} setLocation={setLocation} degrees={degrees} weatherIcon={weatherIcon} setWeatherIcon={setWeatherIcon} weatherIcons={weatherIcons}/>
+                        <Weather props={{selectedLocation, setLocation, degrees, weatherIcon, weatherIcons,setWeatherIcon}}/>
                     }>
                     </Route>
                     <Route path="/search" element={
