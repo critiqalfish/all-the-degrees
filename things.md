@@ -1,7 +1,6 @@
 # possible APIs
 - [ ] openWeatherMap
 - [ ] Climacell
-- [ ] Foreca
 - [ ] Accuweather
 - [ ] weatherapi
 - [ ] visualcrossing
