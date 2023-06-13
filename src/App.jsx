@@ -12,7 +12,19 @@ function App() {
     const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowDegrees': 19, 'highDegrees': 23, 'degrees': {}});
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
 
-    const weatherIcons = {'sun': 'fi fi-rr-sun isun', 'cloud-sun': "fi fi-rr-cloud-sun icloudsun"}
+    const weatherIcons = {'sun': 'fi fi-rr-sun isun', 'cloud-sun': "fi fi-rr-cloud-sun icloudsun"};
+
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            //fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+            //.then((response) => {console.log(response)})
+            //.then()
+            setLocation([position.coords.latitude, " ", position.coords.longitude]);
+        });
+    }
+    else {
+        console.log("no thanks");
+    }
 
     useEffect(() => {
         localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));

@@ -1,6 +1,4 @@
 const Weather = ({props}) => {
-    props.setLocation("Location")
-    props.setWeatherIcon(props.weatherIcons['cloud-sun'])
     return (
         <div className="Weather">
             <h1 id="location">{props.selectedLocation}</h1>
