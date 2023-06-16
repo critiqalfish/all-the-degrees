@@ -1,92 +1,92 @@
 @import "~@flaticon/flaticon-uicons/css/all/all";
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  color: white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
 }
 
 body {
-  background-color: transparent;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
+    background-color: transparent;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
 .Weather {
-  width: 90vw;
-  text-align: center;
+    width: 90vw;
+    text-align: center;
 }
 
 .Weather #location {
-  font-size: 4vh;
-  width: 90vw;
-  word-wrap: break-word;
+    font-size: 4vh;
+    width: 90vw;
+    word-wrap: break-word;
 }
 
 .Weather #degrees {
-  font-size: 10vh;
-  margin-top: 1vh;
+    font-size: 10vh;
+    margin-top: 1vh;
 }
 
 .Weather #degrees i {
-  vertical-align: middle;
-  margin-right: 3vw;
+    vertical-align: middle;
+    margin-right: 3vw;
 }
 
 .isun {
-  color: rgb(255, 217, 0);
+    color: rgb(255, 217, 0);
 }
 
 .Weather #low, .Weather #high {
-  font-size: 3vh;
+    font-size: 3vh;
 }
 
 .Weather .box {
-  width: 90vw;
-  background-color: #45465c;
-  border-radius: 15px;
+    width: 90vw;
+    background-color: #45465c;
+    border-radius: 15px;
 }
 
 .BottomBar {
-  background: #3c3e57;
-  border-radius: 15px 15px 0px 0px;
-  width: 100vw;
-  height: 12vh;
-  position: fixed;
-  bottom: 0vh;
-  left: 0vw;
-  padding-bottom: 1vh;
+    background: #3c3e57;
+    border-radius: 15px 15px 0px 0px;
+    width: 100vw;
+    height: 12vh;
+    position: fixed;
+    bottom: 0vh;
+    left: 0vw;
+    padding-bottom: 1vh;
 }
 
 .BottomBar .items {
-  display: flex;
-  list-style: none;
-  position: relative;
-  height: 100%;
-  align-items: center;
+    display: flex;
+    list-style: none;
+    position: relative;
+    height: 100%;
+    align-items: center;
 }
 
 .BottomBar .items .item {
-  text-align: center;
-  flex: 1 1 0px;
-  position: relative;
+    text-align: center;
+    flex: 1 1 0px;
+    position: relative;
 }
 
 .BottomBar .items .item a {
-  color: #acb8c1;
-  text-decoration: none;
-  font-size: 0.8em;
+    color: #acb8c1;
+    text-decoration: none;
+    font-size: 0.8em;
 }
 
 .BottomBar .items .item a.active,
 .BottomBar .items .item a.active i {
-  color: #ffffff;
+    color: #ffffff;
 }
 
 .BottomBar .items .item i {
-  color: #acb8c1;
-  display: block;
-  font-size: 2.5rem;
+    color: #acb8c1;
+    display: block;
+    font-size: 2.5rem;
 }
