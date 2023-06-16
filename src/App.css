@@ -9,19 +9,26 @@
 
 body {
     background-color: transparent;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
 }
 
+body::-webkit-scrollbar{
+    -webkit-appearance: none;
+    display: none !important;
+    width: 0 !important;
+}
+
 .Weather {
-    width: 90vw;
+    width: 100vw;
     text-align: center;
+    position: fixed;
+    left: 0;
 }
 
 .Weather #location {
     font-size: 4vh;
-    width: 90vw;
     word-wrap: break-word;
 }
 

@@ -8,7 +8,7 @@ import Settings from './Settings';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-    const [selectedLocation, setLocation] = useState(JSON.parse(localStorage.getItem('selectedLocation')) || 'Location');
+    const [selectedLocation, setLocation] = useState(localStorage.getItem('selectedLocation') || 'Location');
     const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowDegrees': 19, 'highDegrees': 23, 'degrees': {}});
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
 
@@ -19,7 +19,7 @@ function App() {
             navigator.geolocation.getCurrentPosition((position) => {
                 fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
                 .then((response) => response.json())
-                .then((response) => {setLocation(response.address.town)})
+                .then((response) => {setLocation(response.address.city)})
             }, () => {console.log("user dumb")})
         }
         else {
@@ -28,7 +28,7 @@ function App() {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));
+        localStorage.setItem("selectedLocation", selectedLocation);
     }, [selectedLocation]);
 
     return (
