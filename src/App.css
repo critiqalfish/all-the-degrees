@@ -7,6 +7,10 @@
     color: white;
 }
 
+html {
+    touch-action: pan-y;
+}
+
 body {
     background-color: transparent;
     height: 100vh;
@@ -15,9 +19,11 @@ body {
 }
 
 body::-webkit-scrollbar{
-    -webkit-appearance: none;
+    -webkit-appearance: none !important;
     display: none !important;
     width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
 }
 
 .Weather {
