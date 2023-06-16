@@ -9,10 +9,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
     const [selectedLocation, setLocation] = useState(localStorage.getItem('selectedLocation') || 'Location');
-    const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowDegrees': 19, 'highDegrees': 23, 'degrees': {}});
+    const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowestDegrees': 19, 'highestDegrees': 23, 'degrees': {}});
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
 
-    const weatherIcons = {'sun': 'fi fi-rr-sun isun', 'cloud-sun': "fi fi-rr-cloud-sun icloudsun"};
+    const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun"};
 
     useEffect(() => {
         if ("geolocation" in navigator) {

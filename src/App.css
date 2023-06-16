@@ -13,7 +13,7 @@ html {
 
 body {
     background-color: transparent;
-    height: 100vh;
+    height: 150vh;
     display: flex;
     justify-content: center;
 }
@@ -33,27 +33,42 @@ body::-webkit-scrollbar{
     left: 0;
 }
 
+.Weather i {
+    vertical-align: middle;
+}
+
 .Weather #location {
     font-size: 4vh;
     word-wrap: break-word;
 }
 
+.Weather #highlow {
+    font-size: 3vh;
+}
+
 .Weather #degrees {
-    font-size: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.Weather #temperature {
     margin-top: 1vh;
 }
 
-.Weather #degrees i {
-    vertical-align: middle;
+.Weather #temperature i {
     margin-right: 3vw;
 }
 
-.isun {
-    color: rgb(255, 217, 0);
+.Weather #degrees.scrolledDown {
+    flex-direction: row;
 }
 
-.Weather #low, .Weather #high {
-    font-size: 3vh;
+.Weather #highlow.scrolledDown {
+    font-size: 2vh;
+    margin-top: 1vh;
+    padding-left: 3vw;
 }
 
 .Weather .box {
