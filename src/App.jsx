@@ -19,7 +19,7 @@ function App() {
             navigator.geolocation.getCurrentPosition((position) => {
                 fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
                 .then((response) => response.json())
-                .then((response) => {setLocation(response.address.city)})
+                .then((response) => {setLocation(response.address.city || response.address.town)})
             }, () => {console.log("user dumb")})
         }
         else {
