@@ -14,17 +14,18 @@ function App() {
 
     const weatherIcons = {'sun': 'fi fi-rr-sun isun', 'cloud-sun': "fi fi-rr-cloud-sun icloudsun"};
 
-    if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            //fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
-            //.then((response) => {console.log(response)})
-            //.then()
-            setLocation([position.coords.latitude, " ", position.coords.longitude]);
-        });
-    }
-    else {
-        console.log("no thanks");
-    }
+    useEffect(() => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                fetch(`https://geocode.maps.co/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+                .then((response) => response.json())
+                .then((response) => {setLocation(response.address.town)})
+            }, () => {console.log("user dumb")})
+        }
+        else {
+            console.log("device dumb");
+        }
+    }, [])
 
     useEffect(() => {
         localStorage.setItem("selectedLocation", JSON.stringify(selectedLocation));
