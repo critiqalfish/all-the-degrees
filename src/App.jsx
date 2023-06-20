@@ -9,13 +9,20 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
     const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0});
-    const [degrees, setDegrees] = useState({'avgDegrees': 21, 'lowestDegrees': 19, 'highestDegrees': 23, 'degrees': {'OMW': {}}});
+    const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
+        'avgDegrees': 0,
+        'lowestDegrees': 0,
+        'highestDegrees': 0,
+        'degrees': {
+            'OMW': {}
+        }
+    });
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
 
-    const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun"};
+    const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun."};
 
     const APIkeys = {
-        'OMW': '5c4d19f49fc7e48132fe11089d9a57ab'
+        'OMW': ''
     };
 
     const settings = {
@@ -51,34 +58,49 @@ function App() {
 
     // get OpenWeatherMap data
     const getOMW = () => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${settings.unit}`)
-        .then((response) => response.json())
-        .then((response) => setDegrees(...degrees, ...: {})) // continue here (nested spread op)
-    }
+        return new Promise((resolve, reject) => {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${settings.unit}`)
+            .then((response) => response.json())
+            .then((response) => {
+                setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
+                resolve(true);
+            });
+        });
+    };
+
+    const composeWeather = () => {
+        setDegrees({...allTheDegrees, avgDegrees: Math.round(allTheDegrees.degrees.OMW.main.temp)});
+    };
 
     // start setup on page load
     useEffect(() => {
         const init = async () => {
-            const locationPermissionGranted = await getLocation();
-            if (locationPermissionGranted) {
-                getOMW();
+            if (await getLocation()) {
+                await Promise.all([getOMW()]);
+                composeWeather();
             }
         };
 
         init();
+    // eslint-disable-next-line
     }, [])
 
-    // save location in localStorage if location changes
+    // save location in localStorage if it changes
     useEffect(() => {
         localStorage.setItem("location", JSON.stringify(location));
     }, [location]);
+
+    // save allTheDegrees in localStorage if it changes
+    useEffect(() => {
+        localStorage.setItem("allTheDegrees", JSON.stringify(allTheDegrees));
+    }, [allTheDegrees]);
 
     return (
         <div className='Container'>
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather props={{location, setLocation, degrees, weatherIcon, weatherIcons,setWeatherIcon}}/>
+                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons,setWeatherIcon}}/>
                     }>
                     </Route>
                     <Route path="/search" element={

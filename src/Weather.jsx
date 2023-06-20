@@ -42,10 +42,10 @@ const Weather = ({props}) => {
         <div className="Weather">
             <h1 id="location">{props.location.loc}</h1>
             <div id='degrees' className={scrolledDown ? 'scrolledDown' : ''}>
-                <h1 id="temperature" style={{ fontSize: `${newSize}vh` }}><i className={props.weatherIcon}></i>{props.degrees.avgDegrees}°</h1>
+                <h1 id="temperature" style={{ fontSize: `${newSize}vh` }}><i className={props.weatherIcon}></i>{props.allTheDegrees.avgDegrees}°</h1>
                 <div id='highlow' className={scrolledDown ? 'scrolledDown' : ''} style={{ opacity: highlowOpacity}}>
-                    <h3 id="low"><i className='fi fi-rr-temperature-down'></i> {props.degrees.lowestDegrees}°</h3>
-                    <h3 id="high"><i className='fi fi-rr-temperature-up'></i> {props.degrees.highestDegrees}°</h3>
+                    <h3 id="low"><i className='fi fi-rr-temperature-down'></i> {props.allTheDegrees.lowestDegrees}°</h3>
+                    <h3 id="high"><i className='fi fi-rr-temperature-up'></i> {props.allTheDegrees.highestDegrees}°</h3>
                 </div>
             </div>
             <div className="box" id="hourly">
