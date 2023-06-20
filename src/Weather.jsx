@@ -5,6 +5,7 @@ const Weather = ({props}) => {
     const [highlowOpacity, setHighlowOpacity] = useState(1);
     const [scrolledDown, setScrolledDown] = useState(false);
 
+    // animation for making main weather info smaller when scrolling down
     useEffect(() => {
         const handleScroll = () => {
             const currentPosition = window.scrollY;
@@ -39,7 +40,7 @@ const Weather = ({props}) => {
 
     return (
         <div className="Weather">
-            <h1 id="location">{props.selectedLocation}</h1>
+            <h1 id="location">{props.location.loc}</h1>
             <div id='degrees' className={scrolledDown ? 'scrolledDown' : ''}>
                 <h1 id="temperature" style={{ fontSize: `${newSize}vh` }}><i className={props.weatherIcon}></i>{props.degrees.avgDegrees}°</h1>
                 <div id='highlow' className={scrolledDown ? 'scrolledDown' : ''} style={{ opacity: highlowOpacity}}>
