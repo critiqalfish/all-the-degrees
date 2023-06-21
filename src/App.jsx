@@ -18,16 +18,13 @@ function App() {
         }
     });
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
-
     const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun."};
 
     const APIkeys = {
         'OMW': ''
     };
 
-    const settings = {
-        'unit': 'metric'
-    }
+    const [preferences, setPreferences] = useState(JSON.parse(localStorage.getItem('preferences')) || {'unit': 'Celsius'})
 
     // getting geolocation and a reverse geocode, then save it (promise because when it gets called it needs to wait for the user to give location access)
     const getLocation = () => {
@@ -59,7 +56,7 @@ function App() {
     // get OpenWeatherMap data
     const getOMW = () => {
         return new Promise((resolve, reject) => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${settings.unit}`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${preferences.unit}`)
             .then((response) => response.json())
             .then((response) => {
                 setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
@@ -95,6 +92,11 @@ function App() {
         localStorage.setItem("allTheDegrees", JSON.stringify(allTheDegrees));
     }, [allTheDegrees]);
 
+    // save preferences in localStorage if it changes
+    useEffect(() => {
+        localStorage.setItem("preferences", JSON.stringify(preferences));
+    }, [preferences]);
+
     return (
         <div className='Container'>
             <Router>
@@ -108,7 +110,7 @@ function App() {
                     }>
                     </Route>
                     <Route path="/settings" element={
-                        <Settings/>
+                        <Settings props={{preferences, setPreferences}}/>
                     }>
                     </Route>
                 </Routes>
