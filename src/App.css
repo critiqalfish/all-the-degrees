@@ -14,7 +14,7 @@ html {
 
 body {
     background-color: transparent;
-    height: 150vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
 }
@@ -98,10 +98,10 @@ body::-webkit-scrollbar{
     margin: 0.5vh 2vw;
 }
 
-.Settings .Preferences {
+.Settings .Preferences, .Settings .APIkeys {
     width: 100vw;
     align-self: start;
-    padding: 3vh 5vw;
+    padding: 3vh 5vw 0vh 5vw;
 }
 
 .Settings .PreferenceBox {
@@ -132,11 +132,35 @@ body::-webkit-scrollbar{
     border: none;
     color: transparent;
     outline: none;
-    transition: background-color 0.15s ease-in-out;
+    transition: background-color 0.1s ease-in-out;
 }
 
 .Settings .PreferenceItem select:active {
     background-color: #33363b;
+}
+
+.Settings .PreferenceItem input {
+    width: 100%;
+    height: 100%;
+    padding-left: 45vw;
+    padding-right: 5vw;
+    border-radius: 8px;
+    appearance: none;
+    background-color: #202329;
+    border: none;
+    color: #acb8c1;
+    font-size: 2vh;
+    outline: none;
+    text-align: right;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.Settings .PreferenceItem input:active {
+    background-color: #33363b;
+}
+
+.Settings .PreferenceItem input:focus::placeholder {
+    color: transparent;
 }
 
 .Settings .PreferenceItem span {

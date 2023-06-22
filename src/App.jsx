@@ -20,11 +20,8 @@ function App() {
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
     const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun."};
 
-    const APIkeys = {
-        'OMW': ''
-    };
-
     const [preferences, setPreferences] = useState(JSON.parse(localStorage.getItem('preferences')) || {'unit': 'Celsius'})
+    const [APIkeys, setAPIkeys] = useState(JSON.parse(localStorage.getItem('APIkeys')) || {'OMW': ''})
 
     // getting geolocation and a reverse geocode, then save it (promise because when it gets called it needs to wait for the user to give location access)
     const getLocation = () => {
@@ -97,6 +94,11 @@ function App() {
         localStorage.setItem("preferences", JSON.stringify(preferences));
     }, [preferences]);
 
+    // save APIkeys in localStorage if it changes
+    useEffect(() => {
+        localStorage.setItem("APIkeys", JSON.stringify(APIkeys));
+    }, [APIkeys]);
+
     return (
         <div className='Container'>
             <Router>
@@ -110,7 +112,7 @@ function App() {
                     }>
                     </Route>
                     <Route path="/settings" element={
-                        <Settings props={{preferences, setPreferences}}/>
+                        <Settings props={{preferences, setPreferences, APIkeys, setAPIkeys}}/>
                     }>
                     </Route>
                 </Routes>
