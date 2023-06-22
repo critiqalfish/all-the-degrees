@@ -8,7 +8,8 @@ import Settings from './Settings';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-    const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0});
+    const [weatherPromises, setWeatherPromises] = useState(0);
+    const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0, 'timestamp': 0});
     const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
         'avgDegrees': 0,
         'lowestDegrees': 0,
@@ -41,17 +42,18 @@ function App() {
                     .then((response) => {setLocation({
                         'loc': response.address.city || response.address.town,
                         'lat': position.coords.latitude,
-                        'lon': position.coords.longitude});
+                        'lon': position.coords.longitude,
+                        'timestamp': Date.now()});
                         resolve(true);
                     });
                 },
                 () => {
-                    console.log("user dumb");
+                    // user dumb
                     resolve(false);
                 }
                 );
             } else {
-                console.log("device dumb");
+                // device dumb
                 resolve(false);
             }
         });
@@ -60,36 +62,77 @@ function App() {
     // get OpenWeatherMap data
     const getOMW = () => {
         return new Promise((resolve, reject) => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${unitNames.OMW[preferences.unit]}`)
-            .then((response) => response.json())
-            .then((response) => {
-                setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
-                resolve(true);
-            });
+            if (!APIkeys.OMW) {
+                notification('Please provide an API key for OpenWeatherMap');
+                resolve(false);
+            } else {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${unitNames.OMW[preferences.unit]}`)
+                .then((response) => response.json())
+                .then((response) => {
+                    if (response.cod !== 200) {
+                        if (response.message.startsWith('Invalid API key')) {
+                            notification('Please provide a valid API key for OpenWeatherMap')
+                        } else {
+                            notification(`Error occured while fetching OpenWeatherMap weather: ${response.message}`);
+                        }
+                        resolve(false);
+                    } else {
+                        setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
+                        resolve(true);
+                    }
+                });
+            }
         });
     };
 
-    const composeWeather = () => {
-        setDegrees({...allTheDegrees, avgDegrees: Math.round(allTheDegrees.degrees.OMW.main.temp)});
+    // compose all the weather data from the different APIs
+    const composeWeather = (weatherFetches) => {
+        if (weatherFetches === 'display' || (weatherFetches[0].status === 'fulfilled' && weatherFetches[0].value === true)) {
+            setDegrees({...allTheDegrees, avgDegrees: Math.round(allTheDegrees.degrees.OMW.main !== undefined ? allTheDegrees.degrees.OMW.main.temp : 0)});
+        }
+    };
+
+    // notify the user about something (inside the web only) (unfinished)
+    const notification = (message) => {
+        console.log(`### NOTIFICATION ###\n### ${message} ###`);
     };
 
     // start setup on page load
     useEffect(() => {
         const init = async () => {
-            if (await getLocation()) {
-                await Promise.all([getOMW()]);
-                composeWeather();
+            // determine if location is older than 5 minutes
+            if (Date.now() - location.timestamp > 299 * 1000) {
+                if (!await getLocation()) {
+                    notification("location could not be determined");
+                }
             }
         };
-
         init();
     // eslint-disable-next-line
     }, [])
 
-    // save location in localStorage if it changes
+    // refresh weather and save location in localStorage if it changes
     useEffect(() => {
         localStorage.setItem("location", JSON.stringify(location));
+
+        const refreshWeather = async () => {
+            setWeatherPromises(await Promise.allSettled([getOMW()]))
+        };
+
+        if (location.loc !== 'Location' && Date.now() - location.timestamp > 299 * 1000) { // continue here, this needs to be fixed
+            refreshWeather();
+        }
+        composeWeather('display');
+    // eslint-disable-next-line
     }, [location]);
+
+    // compose the weather when the promise is ready
+    useEffect(() => {
+        if (weatherPromises === 0) return;
+        composeWeather(weatherPromises);
+        setWeatherPromises(0);
+    // eslint-disable-next-line
+    }, [weatherPromises])
 
     // save allTheDegrees in localStorage if it changes
     useEffect(() => {
@@ -111,7 +154,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons,setWeatherIcon}}/>
+                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon}}/>
                     }>
                     </Route>
                     <Route path="/search" element={
