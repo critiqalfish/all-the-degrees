@@ -21,6 +21,13 @@ function App() {
     const weatherIcons = {'sun': 'fi fi-rr-sun', 'cloud-sun': "fi fi-rr-cloud-sun."};
 
     const [preferences, setPreferences] = useState(JSON.parse(localStorage.getItem('preferences')) || {'unit': 'Celsius'})
+    const unitNames = {
+        'OMW': {
+            'Kelvin': 'standard',
+            'Celsius': 'metric',
+            'Fahrenheit': 'imperial'
+        }
+    };
     const [APIkeys, setAPIkeys] = useState(JSON.parse(localStorage.getItem('APIkeys')) || {'OMW': ''})
 
     // getting geolocation and a reverse geocode, then save it (promise because when it gets called it needs to wait for the user to give location access)
@@ -53,7 +60,7 @@ function App() {
     // get OpenWeatherMap data
     const getOMW = () => {
         return new Promise((resolve, reject) => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${preferences.unit}`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${unitNames.OMW[preferences.unit]}`)
             .then((response) => response.json())
             .then((response) => {
                 setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
