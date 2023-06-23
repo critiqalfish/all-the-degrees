@@ -99,6 +99,22 @@ function App() {
         console.log(`### NOTIFICATION ###\n### ${message} ###`);
     };
 
+    // resets the preferences
+    const resetPreferences = () => {
+        setPreferences({'unit': 'Celsius'});
+    };
+
+    // resets the API keys
+    const resetAPIkeys = () => {
+        setAPIkeys({'OMW': ''});
+    };
+
+    // clears the localStorage
+    const clearLocalStorage = () => {
+        localStorage.clear();
+        window.location.reload();
+    };
+
     // start setup on page load
     useEffect(() => {
         if (!refresh && pageLoaded) return;
@@ -170,7 +186,7 @@ function App() {
                     }>
                     </Route>
                     <Route path="/settings" element={
-                        <Settings props={{preferences, setPreferences, APIkeys, setAPIkeys}}/>
+                        <Settings props={{preferences, setPreferences, APIkeys, setAPIkeys, resetPreferences, resetAPIkeys, clearLocalStorage}}/>
                     }>
                     </Route>
                 </Routes>

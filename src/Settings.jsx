@@ -25,6 +25,25 @@ const Settings = ({props}) => {
                     </div>
                 </div>
             </div>
+            <div className="Miscellaneous">
+                <h4>Miscellaneous</h4>
+                <div className="PreferenceBox">
+                    <div className="PreferenceItem">
+                        <label htmlFor="button">Reset Preferences</label>
+                        <input type="button" style={{borderRadius: '8px 8px 0px 0px'}} onClick={(e) => {props.resetPreferences()}}></input>
+                    </div>
+                    <hr/>
+                    <div className="PreferenceItem">
+                        <label htmlFor="button">Reset API keys</label>
+                        <input type="button" style={{borderRadius: '0px'}} onClick={(e) => {props.resetAPIkeys()}}></input>
+                    </div>
+                    <hr/>
+                    <div className="PreferenceItem">
+                        <label htmlFor="button" style={{color: '#ff2240'}}>Clear localStorage</label>
+                        <input type="button" style={{borderRadius: '0px 0px 8px 8px'}} onClick={(e) => {props.clearLocalStorage()}}></input>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

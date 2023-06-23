@@ -90,6 +90,7 @@ body::-webkit-scrollbar{
 
 .Settings {
     width: 100vw;
+    height: calc(88vh - env(safe-area-inset-top));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,6 +111,14 @@ body::-webkit-scrollbar{
     padding: 3vh 5vw 0vh 5vw;
 }
 
+.Settings .Miscellaneous {
+    width: 100vw;
+    align-self: start;
+    margin-top: auto;
+    margin-bottom: 3vh;
+    padding: 3vh 5vw 0vh 5vw;
+}
+
 .Settings .PreferenceBox {
     background-color: #202329;
     margin: 1vh 2vw;
@@ -122,11 +131,23 @@ body::-webkit-scrollbar{
     flex-direction: column;
     justify-content: center;
 }
+.Settings .PreferenceBox hr {
+    height: 0px;
+    border: none;
+    border-top: 1px solid #687179;
+    margin-left: 5vw;
+}
 
 .Settings .PreferenceItem label {
     position: absolute;
+    pointer-events: none;
     margin-left: 3vw;
     font-size: 2vh;
+}
+
+.Settings .PreferenceItem label[for=button] {
+    margin: 0;
+    align-self: center;
 }
 
 .Settings .PreferenceItem select {
@@ -170,6 +191,7 @@ body::-webkit-scrollbar{
 }
 
 .Settings .PreferenceItem span {
+    pointer-events: none; 
     position: absolute;
     align-self: end;
     margin-right: 3vw;
