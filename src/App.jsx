@@ -8,6 +8,7 @@ import Settings from './Settings';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
+    const [pageLoad, setPageLoad] = useState(false);
     const [weatherPromises, setWeatherPromises] = useState(0);
     const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0, 'timestamp': 0});
     const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
@@ -115,14 +116,18 @@ function App() {
     useEffect(() => {
         localStorage.setItem("location", JSON.stringify(location));
 
+        if (pageLoad === false) {
+            setPageLoad(true);
+            composeWeather('display');
+            return;
+        }
         const refreshWeather = async () => {
             setWeatherPromises(await Promise.allSettled([getOMW()]))
         };
 
-        if (location.loc !== 'Location' && Date.now() - location.timestamp > 299 * 1000) { // continue here, this needs to be fixed
+        if (location.loc !== 'Location') { // continue here, this needs to be fixed
             refreshWeather();
         }
-        composeWeather('display');
     // eslint-disable-next-line
     }, [location]);
 
