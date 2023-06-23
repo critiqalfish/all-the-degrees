@@ -104,7 +104,7 @@ function App() {
         if (!refresh && pageLoaded) return;
         const init = async () => {
             // determine if location is older than 5 minutes
-            if (Object.keys(allTheDegrees.degrees.OMW).length === 0 || Date.now() - location.timestamp > 299 * 1000) {
+            if (Object.keys(allTheDegrees.degrees.OMW).length === 0 || refresh || Date.now() - location.timestamp > 299 * 1000) {
                 if (!await getLocation()) {
                     notification("location could not be determined");
                 }
