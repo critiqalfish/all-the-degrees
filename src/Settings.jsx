@@ -21,7 +21,7 @@ const Settings = ({props}) => {
                 <div className="PreferenceBox">
                     <div className="PreferenceItem">
                         <label>OpenWeatherMap</label>
-                        <input type='text' placeholder='N/A' value={props.APIkeys.OMW} onChange={(e) => {props.setAPIkeys({...props.APIkeys, OMW: e.target.value})}}></input>
+                        <input type='text' placeholder='N/A' value={props.APIkeys.OWM} onChange={(e) => {props.setAPIkeys({...props.APIkeys, OWM: e.target.value})}}></input>
                     </div>
                 </div>
             </div>

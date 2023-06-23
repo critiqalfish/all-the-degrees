@@ -18,7 +18,7 @@ function App() {
         'lowestDegrees': 0,
         'highestDegrees': 0,
         'degrees': {
-            'OMW': {}
+            'OWM': {}
         }
     });
     const [weatherIcon, setWeatherIcon] = useState("fi fi-rr-sun");
@@ -26,13 +26,13 @@ function App() {
 
     const [preferences, setPreferences] = useState(JSON.parse(localStorage.getItem('preferences')) || {'unit': 'Celsius'})
     const unitNames = {
-        'OMW': {
+        'OWM': {
             'Kelvin': 'standard',
             'Celsius': 'metric',
             'Fahrenheit': 'imperial'
         }
     };
-    const [APIkeys, setAPIkeys] = useState(JSON.parse(localStorage.getItem('APIkeys')) || {'OMW': ''})
+    const [APIkeys, setAPIkeys] = useState(JSON.parse(localStorage.getItem('APIkeys')) || {'OWM': ''})
 
     // getting geolocation and a reverse geocode, then save it (promise because when it gets called it needs to wait for the user to give location access)
     const getLocation = () => {
@@ -63,13 +63,13 @@ function App() {
     };
 
     // get OpenWeatherMap data
-    const getOMW = () => {
+    const getOWM = () => {
         return new Promise((resolve, reject) => {
-            if (!APIkeys.OMW) {
+            if (!APIkeys.OWM) {
                 notification('Please provide an API key for OpenWeatherMap');
                 resolve(false);
             } else {
-                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OMW}&units=${unitNames.OMW[preferences.unit]}`)
+                fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${location.lat}&lon=${location.lon}&appid=${APIkeys.OWM}&units=${unitNames.OWM[preferences.unit]}`)
                 .then((response) => response.json())
                 .then((response) => {
                     if (response.cod !== 200) {
@@ -80,7 +80,7 @@ function App() {
                         }
                         resolve(false);
                     } else {
-                        setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OMW: response}});
+                        setDegrees({...allTheDegrees, degrees: { ...allTheDegrees.degrees, OWM: response}});
                         resolve(true);
                     }
                 });
@@ -91,7 +91,7 @@ function App() {
     // compose all the weather data from the different APIs
     const composeWeather = (weatherFetches) => {
         if (weatherFetches === 'display' || (weatherFetches[0].status === 'fulfilled' && weatherFetches[0].value === true)) {
-            setDegrees({...allTheDegrees, avgDegrees: Math.round(allTheDegrees.degrees.OMW.main !== undefined ? allTheDegrees.degrees.OMW.main.temp : 0)});
+            setDegrees({...allTheDegrees, avgDegrees: Math.round(allTheDegrees.degrees.OWM.main !== undefined ? allTheDegrees.degrees.OWM.main.temp : 0)});
         }
     };
 
@@ -107,7 +107,7 @@ function App() {
 
     // resets the API keys
     const resetAPIkeys = () => {
-        setAPIkeys({'OMW': ''});
+        setAPIkeys({'OWM': ''});
     };
 
     // clears the localStorage
@@ -121,7 +121,7 @@ function App() {
         if (!refresh && pageLoaded) return;
         const init = async () => {
             // determine if location is older than 5 minutes
-            if (Object.keys(allTheDegrees.degrees.OMW).length === 0 || refresh || Date.now() - location.timestamp > 299 * 1000) {
+            if (Object.keys(allTheDegrees.degrees.OWM).length === 0 || refresh || Date.now() - location.timestamp > 299 * 1000) {
                 if (!await getLocation()) {
                     notification("location could not be determined");
                 }
@@ -142,7 +142,7 @@ function App() {
             return;
         }
         const refreshWeather = async () => {
-            setWeatherPromises(await Promise.allSettled([getOMW()]))
+            setWeatherPromises(await Promise.allSettled([getOWM()]))
         };
 
         if (location.loc !== 'Location') {
