@@ -37,6 +37,9 @@ const Weather = ({props}) => {
     }, []);
 
     const newSize = Math.max(Math.min(10 - (scrollPosition / (window.innerHeight * 0.04)), 14), 4.4);
+    if (newSize === 14) {
+        props.setRefresh(true);
+    }
 
     return (
         <div className="Weather">
@@ -48,11 +51,13 @@ const Weather = ({props}) => {
                     <h3 id="high"><i className='fi fi-rr-temperature-up'></i> {props.allTheDegrees.highestDegrees}°</h3>
                 </div>
             </div>
-            <div className="box" id="hourly">
+            <div className='boxes'>
+                <div className="box" id="hourly">
 
-            </div>
-            <div className="box" id="weathers">
-                
+                </div>
+                <div className="box" id="weathers">
+                    
+                </div>
             </div>
         </div>
     )

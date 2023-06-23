@@ -8,7 +8,8 @@ import Settings from './Settings';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
-    const [pageLoad, setPageLoad] = useState(false);
+    const [pageLoaded, setPageLoaded] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const [weatherPromises, setWeatherPromises] = useState(0);
     const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0, 'timestamp': 0});
     const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
@@ -100,6 +101,7 @@ function App() {
 
     // start setup on page load
     useEffect(() => {
+        if (!refresh && pageLoaded) return;
         const init = async () => {
             // determine if location is older than 5 minutes
             if (Date.now() - location.timestamp > 299 * 1000) {
@@ -109,15 +111,16 @@ function App() {
             }
         };
         init();
+        setRefresh(false);
     // eslint-disable-next-line
-    }, [])
+    }, [refresh])
 
     // refresh weather and save location in localStorage if it changes
     useEffect(() => {
         localStorage.setItem("location", JSON.stringify(location));
 
-        if (pageLoad === false) {
-            setPageLoad(true);
+        if (pageLoaded === false) {
+            setPageLoaded(true);
             composeWeather('display');
             return;
         }
@@ -125,7 +128,7 @@ function App() {
             setWeatherPromises(await Promise.allSettled([getOMW()]))
         };
 
-        if (location.loc !== 'Location') { // continue here, this needs to be fixed
+        if (location.loc !== 'Location') {
             refreshWeather();
         }
     // eslint-disable-next-line
@@ -159,7 +162,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon}}/>
+                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon, setRefresh}}/>
                     }>
                     </Route>
                     <Route path="/search" element={

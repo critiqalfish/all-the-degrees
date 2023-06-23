@@ -29,7 +29,9 @@ body::-webkit-scrollbar{
 
 .Weather {
     width: 100vw;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
     left: 0;
 }
@@ -72,10 +74,14 @@ body::-webkit-scrollbar{
     padding-left: 3vw;
 }
 
+.Weather .boxes {
+    width: 100vw;
+    padding: 3vh 5vw 3vh 5vw;
+}
+
 .Weather .box {
-    width: 90vw;
     background-color: #45465c;
-    border-radius: 15px;
+    border-radius: 8px;
 }
 
 .Search h1 {
