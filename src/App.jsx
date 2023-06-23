@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
     const [pageLoaded, setPageLoaded] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [weatherPromises, setWeatherPromises] = useState(0);
     const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0, 'timestamp': 0});
     const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
@@ -146,6 +147,7 @@ function App() {
 
         if (location.loc !== 'Location') {
             refreshWeather();
+            setIsRefreshing(false);
         }
     // eslint-disable-next-line
     }, [location]);
@@ -178,7 +180,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon, setRefresh}}/>
+                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon, setRefresh, isRefreshing, setIsRefreshing}}/>
                     }>
                     </Route>
                     <Route path="/search" element={

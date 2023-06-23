@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Spinner.css';
 
 const Weather = ({props}) => {
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -39,10 +40,25 @@ const Weather = ({props}) => {
     const newSize = Math.max(Math.min(10 - (scrollPosition / (window.innerHeight * 0.04)), 14), 4.4);
     if (newSize === 14) {
         props.setRefresh(true);
+        props.setIsRefreshing(true);
     }
 
     return (
         <div className="Weather">
+            <div className='spinner' style={props.isRefreshing ? {display: 'initial'} : {display: 'none'}}>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+                <div className="spinner-blade"></div>
+            </div>
             <h1 id="location">{props.location.loc}</h1>
             <div id='degrees' className={scrolledDown ? 'scrolledDown' : ''}>
                 <h1 id="temperature" style={{ fontSize: `${newSize}vh` }}><i className={props.weatherIcon}></i>{props.allTheDegrees.avgDegrees}°</h1>

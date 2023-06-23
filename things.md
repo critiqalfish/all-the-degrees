@@ -10,5 +10,4 @@
 
 
 # TODO in near future
-- refresh icon
 - pop up notifications (in app)
