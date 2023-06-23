@@ -124,7 +124,10 @@ function App() {
             if (Object.keys(allTheDegrees.degrees.OWM).length === 0 || refresh || Date.now() - location.timestamp > 299 * 1000) {
                 if (!await getLocation()) {
                     notification("location could not be determined");
+                    setIsRefreshing(false);
                 }
+            } else {
+                setIsRefreshing(false);
             }
         };
         init();
