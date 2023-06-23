@@ -40,12 +40,11 @@ const Weather = ({props}) => {
     const newSize = Math.max(Math.min(10 - (scrollPosition / (window.innerHeight * 0.04)), 14), 4.4);
     if (newSize === 14) {
         props.setRefresh(true);
-        props.setIsRefreshing(true);
     }
 
     return (
         <div className="Weather">
-            <div className='spinner' style={props.isRefreshing ? {display: 'initial'} : {display: 'none'}}>
+            <div className='spinner' style={props.refresh ? {display: 'initial'} : {display: 'none'}}>
                 <div className="spinner-blade"></div>
                 <div className="spinner-blade"></div>
                 <div className="spinner-blade"></div>
@@ -69,7 +68,7 @@ const Weather = ({props}) => {
             </div>
             <div className='boxes'>
                 <div className="box" id="hourly">
-
+                    
                 </div>
                 <div className="box" id="weathers">
                     

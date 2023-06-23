@@ -10,7 +10,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 function App() {
     const [pageLoaded, setPageLoaded] = useState(false);
     const [refresh, setRefresh] = useState(false);
-    const [isRefreshing, setIsRefreshing] = useState(false);
     const [weatherPromises, setWeatherPromises] = useState(0);
     const [location, setLocation] = useState(JSON.parse(localStorage.getItem('location')) || {'loc': 'Location', 'lat': 0, 'lon': 0, 'timestamp': 0});
     const [allTheDegrees, setDegrees] = useState(JSON.parse(localStorage.getItem('allTheDegrees')) || {
@@ -123,15 +122,14 @@ function App() {
             // determine if location is older than 5 minutes
             if (Object.keys(allTheDegrees.degrees.OWM).length === 0 || refresh || Date.now() - location.timestamp > 299 * 1000) {
                 if (!await getLocation()) {
+                    setRefresh(false);
                     notification("location could not be determined");
-                    setIsRefreshing(false);
                 }
             } else {
-                setIsRefreshing(false);
+                setRefresh(false);
             }
         };
         init();
-        setRefresh(false);
     // eslint-disable-next-line
     }, [refresh])
 
@@ -150,8 +148,8 @@ function App() {
 
         if (location.loc !== 'Location') {
             refreshWeather();
-            setIsRefreshing(false);
         }
+        setRefresh(false);
     // eslint-disable-next-line
     }, [location]);
 
@@ -183,7 +181,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon, setRefresh, isRefreshing, setIsRefreshing}}/>
+                        <Weather props={{location, setLocation, allTheDegrees, weatherIcon, weatherIcons, setWeatherIcon, refresh, setRefresh}}/>
                     }>
                     </Route>
                     <Route path="/search" element={
